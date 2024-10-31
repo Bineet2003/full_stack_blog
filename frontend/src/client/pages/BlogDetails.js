@@ -10,8 +10,7 @@ const BlogDetails = () => {
   const [comments, setComments] = useState([]); // State for comments
   const [newComment, setNewComment] = useState(''); // State for new comment input
   const [likes, setLikes] = useState(0);
-  const [liked, setLiked] = useState(false);
-
+  
   // Fetch blog details by id
   const fetchBlogDetails = async () => {
     try {
@@ -33,8 +32,8 @@ const BlogDetails = () => {
     e.preventDefault();
     try {
       const { data } = await axiosInstance.post(`/blogs/${id}/comment`, { comment: newComment });
-     fetchBlogDetails();
-     setNewComment('')
+      fetchBlogDetails();
+      setNewComment('');
     } catch (error) {
       console.error('Error adding comment:', error);
     }
@@ -97,7 +96,9 @@ const BlogDetails = () => {
                     key={comment._id}
                     className="bg-gray-100 p-4 rounded-lg shadow-lg hover:shadow-2xl transition duration-300"
                   >
-                    <p className="text-sm text-gray-500">User: {comment.user.username}</p>
+                    <p className="text-sm text-gray-500">
+                      User: {comment.user ? comment.user.username : 'Deleted User'}
+                    </p>
                     <p className="text-gray-700">{comment.comment}</p>
                   </div>
                 ))
